@@ -1,0 +1,13 @@
+
+<div class="container-fluid">
+  <h4>New product</h4>
+  <%= form_with model: [:admin, @restaurant, @restaurant.products.build] do |form|%>
+    <p><%= form.label :name%>
+    <%=form.text_field :name, class: 'form-control'%></p>
+
+    <p><%=form.label :price%>
+    <%=form.text_field :price, class: 'form-control'%></p>
+
+    <p><%=form.submit 'Create product', class: 'btn bg-success rounded-0 my-2'%></p>
+  <%end%>
+</div>

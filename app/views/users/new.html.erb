@@ -1,0 +1,14 @@
+<div class="container-fluid">
+  <%= form_with model: @user do |form| %>
+    <p> <%= form.label :name %> 
+    <%= form.text_field :name, class: 'form-control' %> </p>
+
+    <p> <%= form.label :surname %> 
+    <%= form.text_field :surname, class: 'form-control' %> </p>
+
+    <p> <%= form.label :phone_number %> 
+    <%= form.text_field :phone_number, class: 'form-control' %> </p>
+        
+    <%= form.submit "Sign up", class: 'btn bg-success rounded-0 my-2' %>
+  <% end %>
+</div>

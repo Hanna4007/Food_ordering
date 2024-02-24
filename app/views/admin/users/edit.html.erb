@@ -1,0 +1,16 @@
+<div class="container-fluid">
+  <h4>Edit profile</h4>
+
+  <p> Name: <%= @user.name %> </p>
+  <p> Surname: <%= @user.surname %> </p>  
+  <p> Phone number: <%= @user.phone_number %> </p>
+  
+  <% unless @current_user == @user%>
+    <%= form_with model: [:admin, @user] do |form| %>
+      <p> <%= form.label :status, 'Admin status' %>
+      <%= form.check_box :status, checked: @user.status? %> </p>
+             
+    <%= form.submit "Save profile", class: 'btn bg-success rounded-0 my-2' %>
+  <% end %>
+  <% end %>
+</div>

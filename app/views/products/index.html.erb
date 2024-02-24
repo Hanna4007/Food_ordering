@@ -1,0 +1,51 @@
+<div class="container-fluid">
+  <h4><%= @restaurant.name %></h4>
+
+  <% if current_user.present? && current_user.status? %>
+    <p><%= link_to 'New item', new_admin_restaurant_product_path(@restaurant), class: 'btn bg-success-subtle rounded-0' %></p>
+  <% end %>
+
+  <% unless current_user.present? %>
+    <%= link_to "Sign up to add to cart", new_user_path, class: 'btn bg-success rounded-0' %> 
+    <%= link_to "Log in to add to cart", new_session_path, class: 'btn bg-success rounded-0' %>
+  <% end %>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="w-25">Name</th>
+        <th class="w-25">Price</th>
+        <% if current_user.present? %>
+          <th class="w-25">Quantity</th>
+          <% if current_user.status? %>
+            <th class="w-10" colspan="2"></th>
+          <% end %>  
+        <% end %>        
+      </tr>
+    </thead>
+    <tbody>
+      <% @products.each do |product| %>
+        <tr>
+          <td class="w-25"><%= product.name %></td>
+          <td class="w-25"><%= product.price %></td>
+          <% if current_user.present? %>
+            <td class="w-25"><%= form_with model: @order_items do |form| %>
+                <%= form.hidden_field :product_id, value: product.id %> 
+                <%= form.number_field :quantity, in: 1.0..50.0, step: 1, value: 1 %>          
+                <%= form.submit "Add to cart", class: 'btn bg-success rounded-0' %>
+            </td>
+            <% end %>
+          <% end %>  
+
+          <% if current_user.present? && current_user.status? %>
+            <td class="w-10"><%= link_to 'Edit item', edit_admin_restaurant_product_path(@restaurant, product), class: 'btn bg-success-subtle rounded-0' %></td>
+            <td class="w-10"><%= link_to 'Delete item', admin_restaurant_product_path(@restaurant, product), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: 'btn bg-success-subtle rounded-0' %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+

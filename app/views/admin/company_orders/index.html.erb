@@ -1,0 +1,22 @@
+<div class="container-fluid">
+  <table class="table">
+    <thead>
+      <tr>
+      <th>ID</th>
+      <th>Date</th>
+      <th>Status</th>
+      <th>Company price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @company_orders.each do |company_order|%>
+        <tr>
+          <td><%= company_order.id%></td>
+          <td><%= link_to company_order.updated_at.strftime('%d-%m-%Y'), admin_company_order_path(company_order), class: 'btn-link'%> </td>
+          <td><%= company_order.status%></td>
+          <td><%= company_order.company_price%></td>
+        </tr>   
+      <%end%>
+    </tbody>
+  </table>
+</div>

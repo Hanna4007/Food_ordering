@@ -1,0 +1,62 @@
+<div class="container-fluid">
+<% @company_order.personal_orders.each do |personal_order|%>
+
+
+
+
+
+
+
+
+
+<div class="container-fluid">
+  <% @company_order.personal_orders.each do |personal_order|%>
+    <div class="card border border-success rounded-0 border-top-0">
+      <div class="card-body">
+        <p><%= personal_order.user.phone_number%> 
+           <%= personal_order.user.name%> 
+           <%= personal_order.user.surname%> </p> 
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="w-25">Product</th>
+              <th class="w-25">Restaurant</th>
+              <th class="w-10">Unit price</th>
+              <th class="w-10">Quantity</th>
+              <th class="w-10"colspan="1"></th>        
+              <th class="w-10 text-end">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% personal_order.order_items.each do |order_item|%>
+              <tr>
+                <td class="w-25"><%= order_item.name%></td>
+                <td class="w-25"><%= order_item.product.restaurant.name%></td>
+                <td class="w-10"><%= order_item.unit_price%></td>
+                <td class="w-10">
+                  <%= form_with model: [:admin, personal_order, order_item] do |form| %>
+                    <%= form.hidden_field :product_id, value: order_item.product.id %> 
+                    <%= form.number_field :quantity, in: 1.0..20.0, step: 1, value: order_item.quantity %>
+                    <%= form.submit "Update", class: 'btn bg-success-subtle rounded-0' %>
+                  <%end%>
+                </td>
+                <td class="w-10"><%= link_to "Destroy", admin_personal_order_order_item_path(personal_order, order_item), data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Are you sure?"
+                                        }, class: 'btn bg-success-subtle rounded-0' %></td>
+            
+                <td class="w-10 text-end"><%= order_item.total_price%></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <p class="text-end fw-bold fs-6 mb-0">Total price: <%= personal_order.total_price%></p> 
+      </div>
+    </div>
+  <% end %>    
+  <p class="text-end fw-bold fs-6 mb-0"> Total company price: <%= @company_order.company_price%></p> 
+  <p> <%= button_to 'Confirm the order', admin_carts_path, method: :patch, class: 'btn bg-success rounded-0 my-2' %> </p>
+</div>
+
+
+    

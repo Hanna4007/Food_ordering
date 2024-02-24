@@ -1,0 +1,36 @@
+<div class="container-fluid">
+  <% @user.personal_orders.each do |personal_order|%>
+    <div class="card border border-success rounded-0 border-top-0">
+      <div class="card-body">
+        <p>Date: <%= personal_order.updated_at.strftime('%d-%m-%Y')%>;
+        company order id: <%= personal_order.company_order_id%></p>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="w-25">Product</th>
+              <th class="w-25">Restaurant</th>
+              <th class="w-25">Unit price</th>
+              <th class="w-25">Quantity</th>        
+              <th class="w-25">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% personal_order.order_items.each do |order_item|%>
+              <tr>
+                <td class="w-25"><%= order_item.name%></td>
+                <td class="w-25"><%= order_item.product.restaurant.name%></td>
+                <td class="w-25"><%= order_item.unit_price%></td>
+                <td class="w-25"><%= order_item.quantity%></td>
+                <td class="w-25"><%= order_item.total_price%></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <p class="text-end fw-bold fs-6 mb-0">Total price: <%= personal_order.total_price%></p>
+      </div>
+    </div>
+  <% end %>
+</div>
+  

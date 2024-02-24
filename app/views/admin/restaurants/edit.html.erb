@@ -1,0 +1,17 @@
+<div class="container-fluid">
+  <h4>Edit restourant information</h4>
+
+  <%= form_with model: [:admin, @restaurant] do |form|%>
+    <p><%= form.label :name%>
+    <%= form.text_field :name, class: 'form-control' %></p>
+
+    <p><%= form.label :phone_number%>
+    <%= form.text_field :phone_number, class: 'form-control'%></p>
+
+    <p><%=form.label :address%>
+    <%=form.text_field :address, class: 'form-control'%></p>
+
+    <%= form.submit "Update information", class: 'btn bg-success rounded-0 my-2' %>
+
+  <%end%>
+</div>

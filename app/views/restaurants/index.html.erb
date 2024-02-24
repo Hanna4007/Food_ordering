@@ -1,0 +1,23 @@
+<div class="container-fluid"> 
+  <div class="row mt-4">
+    <% @restaurants.each do |restaurant| %>
+      <div class="col-lg-4 col-md-6 col-12 mb-4">
+        <div class="card border border-success rounded-0 h-100">
+          <div class="card-body px-5">
+            <h5><%= link_to restaurant.name, restaurant_products_path(restaurant), class: 'nav-link ' %></h5>
+            <p>Phone number: <%= restaurant.phone_number %></p>
+            <p>Address: <%= restaurant.address %></p>
+
+            <% if current_user.present? && current_user.status?%>
+              <p><%= link_to 'Edit restaurant', edit_admin_restaurant_path(restaurant), class: 'btn bg-success-subtle rounded-0' %>
+              <%= link_to 'Delete restaurant', admin_restaurant_path(restaurant), data: {
+                  turbo_method: :delete,
+                  turbo_confirm: "Are you sure?"}, class: 'btn bg-success-subtle rounded-0' %> </p>
+            <% end %>                             
+          </div>
+        </div>
+      </div>
+    <% end %>   
+  </div>
+</div>
+

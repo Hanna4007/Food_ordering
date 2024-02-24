@@ -1,0 +1,43 @@
+<div class="container-fluid">
+  <% if @order_items.size == 0 %>
+    <p class="fs-4"> Your cart is empty </p>
+  <% else %>
+    <p>Date: <%= current_order.updated_at.strftime('%d-%m-%Y')%></p>  
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Restaurant</th>
+          <th>Unit price</th>
+          <th>Quantity</th>
+          <th colspan="1"></th>        
+          <th class="text-end">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order_items.each do |order_item|%>
+          <tr>
+            <td><%= order_item.name%></td>
+            <td><%= order_item.product.restaurant.name%></td>
+            <td><%= order_item.unit_price%></td>
+            <td>
+              <%= form_with model: order_item do |form| %>
+                <%= form.hidden_field :product_id, value: order_item.product.id %> 
+                <%= form.number_field :quantity, in: 1.0..20.0, step: 1, value: order_item.quantity %>
+                <%= form.submit "Update", class: 'btn bg-success-subtle rounded-0' %>
+              <%end%>
+            </td>
+            <td><%= link_to "Destroy", order_item_path(order_item), data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Are you sure?"
+                                        }, class: 'btn bg-success-subtle rounded-0' %></td>
+            <td class="text-end"><%= order_item.total_price%></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <p class="text-end fw-bold fs-6 mb-0">Total price: <%=current_order.total_price%></p> 
+    <p> <%= button_to 'Confirm the order', carts_path, method: :patch, class: 'btn bg-success rounded-0' %> </p>
+  <% end %>
+</div>
+

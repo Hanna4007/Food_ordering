@@ -1,0 +1,31 @@
+=> 
+[[32m#<OrderItem:0x00007f8ab3471158[0m
+  id: [34m[1m5[0m,
+  name: [31m[1m"[0m[31mRisotto with chicken[0m[31m[1m"[0m,
+  unit_price: [35m[1m0.169e3[0m,
+  total_price: [35m[1m0.169e3[0m,
+  quantity: [34m[1m1[0m,
+  personal_order_id: [34m[1m1[0m,
+  product_id: [34m[1m1[0m,
+  created_at: Fri, 12 Jan 2024 11:49:45.171044000 UTC +00:00,
+  updated_at: Fri, 12 Jan 2024 11:49:45.171044000 UTC +00:00[32m>[0m,
+ [32m#<OrderItem:0x00007f8ab3439690[0m
+  id: [34m[1m6[0m,
+  name: [31m[1m"[0m[31mRisotto with chicken[0m[31m[1m"[0m,
+  unit_price: [35m[1m0.169e3[0m,
+  total_price: [35m[1m0.169e3[0m,
+  quantity: [34m[1m1[0m,
+  personal_order_id: [34m[1m2[0m,
+  product_id: [34m[1m1[0m,
+  created_at: Fri, 12 Jan 2024 11:56:06.671145000 UTC +00:00,
+  updated_at: Fri, 12 Jan 2024 11:56:06.671145000 UTC +00:00[32m>[0m,
+ [32m#<OrderItem:0x00007f8ab34395c8[0m
+  id: [34m[1m7[0m,
+  name: [31m[1m"[0m[31mRisotto with pork[0m[31m[1m"[0m,
+  unit_price: [35m[1m0.183e3[0m,
+  total_price: [35m[1m0.183e3[0m,
+  quantity: [34m[1m1[0m,
+  personal_order_id: [34m[1m2[0m,
+  product_id: [34m[1m4[0m,
+  created_at: Fri, 12 Jan 2024 11:56:07.770900000 UTC +00:00,
+  updated_at: Fri, 12 Jan 2024 11:56:07.770900000 UTC +00:00[32m>[0m]
