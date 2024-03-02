@@ -6,7 +6,12 @@ class OrderItemsController < ApplicationController
   before_action :no_authentication
 
   def create
-    @order_item = current_order.order_items.new(order_item_params)
+    @order_item = current_order.order_items.find_by(product_id: order_item_params[:product_id])
+    if @order_item
+      @order_item.quantity += order_item_params[:quantity].to_i
+    else
+      @order_item = current_order.order_items.new(order_item_params)
+    end
     @order_item.save
     session[:personal_order_id] = current_order.id
     current_order.save

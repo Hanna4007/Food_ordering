@@ -6,6 +6,12 @@ class OrderItem < ApplicationRecord
 
   before_validation :update_attributes_from_product
 
+  scope :ordered_by_restaurant, -> { 
+    joins(personal_order: :company_order)
+    .where(company_orders: { status: 'in progress' })
+    .includes(product: :restaurant)
+    .order('restaurants.name') }
+
   private
 
   def update_attributes_from_product
