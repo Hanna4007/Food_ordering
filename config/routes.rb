@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resource :carts, only: %i[edit update]
   resources :order_items
   resources :personal_orders
+  resources :favorite_products, only: %i[index create destroy]
 
   namespace :admin do
     resources :restaurants, only: %i[new create edit update destroy] do

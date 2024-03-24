@@ -1,0 +1,38 @@
+<div class="container-fluid"> 
+  <% unless current_user.present? %>
+    <%= link_to "Sign up to add to cart", new_user_path, class: 'btn bg-success rounded-0' %> 
+    <%= link_to "Log in to add to cart", new_session_path, class: 'btn bg-success rounded-0' %>
+  <% else %>   
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="w-20">Name</th>
+          <th class="w-20">Restaurant</th>
+          <th class="w-25 text-center">Price</th>
+          <th class="w-15">Quantity</th>
+          <th class="w-15" colspan="1"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @grouped_favorite_products_by_restaurant.each do |restaurant, products| %>
+          <% products.each do |product| %>        
+            <tr>
+              <td class="w-20"><%= product.name %></td>
+              <td class="w-20"><%= product.restaurant.name %></td>
+              <td class="w-25 text-center"><%= product.price %></td>
+              <td class="w-15"><%= form_with model: @order_items do |form| %>
+                    <%= form.hidden_field :product_id, value: product.id %> 
+                    <%= form.number_field :quantity, in: 1.0..50.0, step: 1, value: 1 %>          
+                    <%= form.submit "Add to cart", class: 'btn bg-success rounded-0' %>
+                  <% end %> 
+              </td>
+              <td class="w-15 text-end"><%= link_to 'Remove from favorites', favorite_product_path(product), data: {
+                  turbo_method: :delete}, class: 'btn bg-success-subtle rounded-0' %>
+              </td>               
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

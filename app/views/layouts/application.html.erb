@@ -19,6 +19,7 @@
   <div class="container-fluid bg-success border border-success rounded-left p-2 d-flex justify-content-between align-items-center">
     <ul class="navbar-nav">
       <li class="nav-item"> <%= link_to "Restaurants", restaurants_path, class: "nav-link" %> </li> 
+      <li class="nav-item"> <%= link_to "Favorite products", favorite_products_path, class: "nav-link" %> </li> 
         <% if current_user.present? %>
         <% if current_user.status? %>
           <li class="nav-item"> <%= link_to "New restaurant", new_admin_restaurant_path, class: "nav-link" %> </li>

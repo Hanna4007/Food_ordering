@@ -17,6 +17,7 @@
         <th class="w-25">Price</th>
         <% if current_user.present? %>
           <th class="w-25">Quantity</th>
+          <th class="w-10" colspan="1"></th>
           <% if current_user.status? %>
             <th class="w-10" colspan="2"></th>
           <% end %>  
@@ -33,8 +34,20 @@
                 <%= form.hidden_field :product_id, value: product.id %> 
                 <%= form.number_field :quantity, in: 1.0..50.0, step: 1, value: 1 %>          
                 <%= form.submit "Add to cart", class: 'btn bg-success rounded-0' %>
+                <% end %>
             </td>
-            <% end %>
+            
+            <% if current_user.products.include?(product) %>
+              <td class="w-10 text-end"><%= link_to 'Remove from favorites', favorite_product_path(product), data: {
+                  turbo_method: :delete}, class: 'btn bg-success-subtle rounded-0' %>
+              </td> 
+            <% else %> 
+              <td class="w-10 text-end"><%= form_with(url: favorite_products_path, method: 'post') do |form| %>
+                  <%= form.hidden_field :product_id, value: product.id %>
+                  <%= form.submit "Add to favorite", class: 'btn bg-success-subtle rounded-0' %>
+                  <% end %>
+              </td>
+            <% end %>          
           <% end %>  
 
           <% if current_user.present? && current_user.status? %>
