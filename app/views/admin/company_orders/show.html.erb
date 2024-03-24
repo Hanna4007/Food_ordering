@@ -1,18 +1,86 @@
 <div class="container-fluid">
-    
-      <table class="table">
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Unit price</th>
-              <th>Total quantity</th>
-              <th>Price for total quantity</th>
-            </tr>
-          </thead>
-          <tbody>
+  <div class="row">
+    <div class="col-md-2">
+      <%= form_with(url: admin_company_order_path, method: 'get') do |form| %>
+       
+          <p class="fw-bold">Sort by</p>
 
+          <p><%= form.radio_button :focus, 'personal_order', checked: params[:focus] == 'personal_order', onchange: 'this.form.submit();' %> 
+          <%= form.label :focus, 'personal orders'%></p>
+     
+          <p><%= form.radio_button :focus, 'restaurant', checked: params[:focus] == 'restaurant', onchange: 'this.form.submit();' %> 
+          <%= form.label :focus, 'restaurants'%></p>
+          
+      <%end%>
+    </div>
 
-          </tbody>
-        </table>
-        
+    <div class="col-md-10">
+      <% if params[:focus] == 'restaurant' %>
+        <% @grouped_order_items_by_restaurant.each do |restaurant, order_items| %>
+          <div class="card border border-success rounded-0 border-top-0">
+            <div class="card-body">
+              <p class="fw-bold"><%= restaurant.name %></p> 
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="w-45"> Product</th>
+                    <th class="w-20">Unit price</th>
+                    <th class="w-20">Quantity</th>
+                    <th class="w-15 text-end">Price</th>
+                  </tr>
+                </thead>
+                                 
+                <tbody>
+                  <% @grouped_by_product[restaurant].each do |product_id, items| %>                           
+                    <tr>
+                      <td class="w-45"><%= @order_item_name[product_id] %></td>
+                      <td class="w-20"><%= @order_item_unit_price[product_id] %></td>
+                      <td class="w-20"><%= @total_quantity[product_id] %></td> 
+                      <td class="w-15 text-end"><%= @total_price[product_id] %></td>
+                    </tr>                    
+                  <% end %>
+                </tbody>
+              </table>
+              <p class="text-end fw-bold fs-6 mb-0">Total price: <%= @restaurant_total_prices[restaurant]%></p>
+            </div>
+          </div>
+        <% end %>
+        <p class="text-end fw-bold fs-6 mb-5"> Total company price: <%= @company_order.company_price%></p>
+      <%else%>
+        <% @company_order.personal_orders.each do |personal_order|%>
+          <div class="card border border-success rounded-0 border-top-0">
+            <div class="card-body">
+              <p><%= personal_order.user.phone_number%> 
+                <%= personal_order.user.name%> 
+                <%= personal_order.user.surname%> </p> 
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="w-25">Product</th>
+                      <th class="w-25">Restaurant</th>
+                      <th class="w-10">Unit price</th>
+                      <th class="w-10">Quantity</th>
+                      <th class="w-10 text-end">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% personal_order.order_items.each do |order_item|%>
+                      <tr>
+                        <td class="w-25"><%= order_item.name%></td>
+                        <td class="w-25"><%= order_item.product.restaurant.name%></td>
+                        <td class="w-10"><%= order_item.unit_price%></td>
+                        <td class="w-10"><%= order_item.quantity%></td>
+                        <td class="w-10 text-end"><%= order_item.total_price%></td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>            
+              <p class="text-end fw-bold fs-6 mb-0">Total price: <%= personal_order.total_price%></p> 
+            </div>
+          </div>
+        <% end %>    
+        <p class="text-end fw-bold fs-6 mb-0"> Total company price: <%= @company_order.company_price%></p> 
+      <%end%>
+    </div>
+  </div>
 </div>
