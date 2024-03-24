@@ -2,7 +2,11 @@
   <h4>Log in</h4>
   <%= form_with scope: :session, url: session_path, data: {turbo: false} do |form| %>
     <p> <%= form.label :phone_number %> 
-        <%= form.text_field :phone_number, class: 'form-control' %> </p>        
+        <%= form.text_field :phone_number, placeholder: '+380 xxx xx xx xx', class: 'form-control' %> </p> 
+
+     <p> <%= form.label :password %> 
+    <%= form.password_field :password, class: 'form-control' %> </p>   
+
     <%= form.submit "Log in", class: 'btn bg-success rounded-0 my-2'  %>
   <% end %>
 </div>

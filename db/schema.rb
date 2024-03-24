@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_16_190029) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_24_132641) do
   create_table "company_orders", force: :cascade do |t|
     t.decimal "company_price", precision: 10, scale: 2
     t.datetime "created_at", null: false
@@ -72,6 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_16_190029) do
     t.boolean "status", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password_digest"
   end
 
   add_foreign_key "order_items", "personal_orders"

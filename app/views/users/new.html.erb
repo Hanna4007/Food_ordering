@@ -7,7 +7,13 @@
     <%= form.text_field :surname, class: 'form-control' %> </p>
 
     <p> <%= form.label :phone_number %> 
-    <%= form.text_field :phone_number, class: 'form-control' %> </p>
+    <%= form.text_field :phone_number, placeholder: '+380 xxx xx xx xx', class: 'form-control' %> </p>
+
+    <p> <%= form.label :password %> 
+    <%= form.password_field :password, class: 'form-control' %> </p>
+
+    <p> <%= form.label :password_confirmation %> 
+    <%= form.password_field :password_confirmation, class: 'form-control' %> </p>
         
     <%= form.submit "Sign up", class: 'btn bg-success rounded-0 my-2' %>
   <% end %>

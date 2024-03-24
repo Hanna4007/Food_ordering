@@ -53,7 +53,7 @@ module Admin
     end
 
     def user_params
-      params.require(:user).permit(:name, :surname, :phone_number, :status)
+      params.require(:user).permit(:name, :surname, :phone_number, :status, :password, :password_confirmation)
     end
   end
 end
