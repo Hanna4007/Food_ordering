@@ -2,6 +2,12 @@
 
 module Admin
   class OrderItemsController < ApplicationController
+    include Authentication
+    include Admin::Concerns::AdminAuthentication
+
+    before_action :no_authentication
+    before_action :check_admin
+
     def update
       @personal_order = PersonalOrder.find(params[:personal_order_id])
       @order_item = @personal_order.order_items.find(params[:id])

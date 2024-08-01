@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class CartsController < ApplicationController
-  # def show
-  # @order_items = current_order.order_items
-  # end
-
+  include Authentication
+  
+  before_action :no_authentication
+  
   def edit
     @order_items = current_order.order_items
   end

@@ -2,6 +2,12 @@
 
 module Admin
   class CartsController < ApplicationController
+    include Authentication
+    include Admin::Concerns::AdminAuthentication
+
+    before_action :no_authentication
+    before_action :check_admin
+  
     def edit
       @company_order = CompanyOrder.find_by(status: 'in progress')
       if params[:focus] == 'restaurant'

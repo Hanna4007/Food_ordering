@@ -2,8 +2,10 @@
 
 module Admin
   class UsersController < ApplicationController
+    include Authentication
     include Admin::Concerns::AdminAuthentication
 
+    before_action :no_authentication
     before_action :check_admin
 
     def index

@@ -2,6 +2,12 @@
 
 module Admin
   class CompanyOrdersController < ApplicationController
+    include Authentication
+    include Admin::Concerns::AdminAuthentication
+
+    before_action :no_authentication
+    before_action :check_admin
+
     def index
       @company_orders = CompanyOrder.company_order_desc
     end
@@ -45,12 +51,6 @@ module Admin
       @company_order = CompanyOrder.find(params[:id])
       @company_order.update(status: 'confirmed')
       redirect_to restaurants_path
-    end
-
-    private
-
-    def company_order_params
-      params.reqiure(:company_order).permit(:status, :company_price)
     end
   end
 end

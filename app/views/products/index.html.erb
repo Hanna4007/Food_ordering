@@ -38,14 +38,16 @@
             </td>
             
             <% if current_user.products.include?(product) %>
-              <td class="w-10 text-end"><%= link_to 'Remove from favorites', favorite_product_path(product), data: {
-                  turbo_method: :delete}, class: 'btn bg-success-subtle rounded-0' %>
-              </td> 
-            <% else %> 
-              <td class="w-10 text-end"><%= form_with(url: favorite_products_path, method: 'post') do |form| %>
-                  <%= form.hidden_field :product_id, value: product.id %>
-                  <%= form.submit "Add to favorite", class: 'btn bg-success-subtle rounded-0' %>
-                  <% end %>
+			        <td class="w-10 text-end">
+                <%= button_to favorite_product_path(product), method: :delete, class: 'btn bg-transparent rounded-0' do %>
+                  <i class="fas fa-heart text-success"></i>
+                <% end %>
+              </td>             
+            <% else %>
+              <td class="w-10 text-end">
+                <%= button_to favorite_products_path, method: 'post', params: { product_id: product.id }, class: 'btn btn-link text-success' do %>
+                  <i class="far fa-heart"></i>
+                <% end %>
               </td>
             <% end %>          
           <% end %>  

@@ -2,6 +2,12 @@
 
 module Admin
   class ProductsController < ApplicationController
+    include Authentication
+    include Admin::Concerns::AdminAuthentication
+
+    before_action :no_authentication
+    before_action :check_admin
+
     def index
       @restaurant = Restaurant.find(params[:restaurant_id])
       @products = @restaurant.products
@@ -40,8 +46,29 @@ module Admin
     def destroy
       @restaurant = Restaurant.find(params[:restaurant_id])
       @product = @restaurant.products.find(params[:id])
+
+      @company_order = CompanyOrder.find_by(status: 'in progress') 
+      if @company_order.present?       
+        @personal_orders = @company_order.personal_orders
+        @personal_orders.each do |personal_order|
+          personal_order.order_items.where(product_id: @product.id).destroy_all
+          personal_order.save
+        end
+        @company_order.save
+      end
+
+      @company_order = CompanyOrder.find_by(status: 'confirmed')  
+      if @company_order.present?    
+        @personal_orders = @company_order.personal_orders
+        @personal_orders.each do |personal_order|
+          personal_order.order_items.where(product_id: @product.id).each do |order_item|
+            order_item.update(product_id: 5)
+          end
+        end
+      end
+        
       @product.destroy
-      redirect_to restaurant_products_path
+      redirect_to restaurant_products_path(@restaurant)
     end
 
     private

@@ -26,9 +26,11 @@
                     <%= form.submit "Add to cart", class: 'btn bg-success rounded-0' %>
                   <% end %> 
               </td>
-              <td class="w-15 text-end"><%= link_to 'Remove from favorites', favorite_product_path(product), data: {
-                  turbo_method: :delete}, class: 'btn bg-success-subtle rounded-0' %>
-              </td>               
+              <td class="w-15 text-end">
+                <%= button_to favorite_product_path(product, redirect: favorite_products_path), method: :delete, class: 'btn bg-transparent rounded-0' do %>
+                  <i class="fas fa-heart text-success"></i>
+                <% end %>
+              </td>              
             </tr>
           <% end %>
         <% end %>

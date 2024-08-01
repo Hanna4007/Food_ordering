@@ -2,6 +2,12 @@
 
 module Admin
   class RestaurantsController < ApplicationController
+    include Authentication
+    include Admin::Concerns::AdminAuthentication
+
+    before_action :no_authentication
+    before_action :check_admin
+
     def new
       @restaurant = Restaurant.new
     end
